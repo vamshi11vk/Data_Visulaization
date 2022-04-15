@@ -1,0 +1,8 @@
+"0",""
+"0","ggp <- ggplot(data_4)  + "
+"0","  geom_bar(aes(x=`Observation Date`, y=`Composite Home Price Index`),stat=""identity"", fill=""cyan"",colour=""#006000"")+"
+"0","  geom_line(aes(x=`Observation Date`, y=`Median Sale Price`),stat=""identity"",color=""red"",size=2)+"
+"0","  labs(title= ""Composite Home Price Index and Average Sale Price"","
+"0","       x=""Year"",y=""Number of Courses Sold"")+"
+"0","  scale_y_continuous(sec.axis=sec_axis(~.))"
+"0","ggp"

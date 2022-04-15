@@ -1,0 +1,296 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+
+```{r}
+
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+
+```{r}
+library(dygraphs)
+library(xts)          # To make the convertion data-frame / xts format
+library(tidyverse)
+library(lubridate)
+library(readxl)
+```
+
+```{r}
+data_1 <- read_excel("Dataviz assignment datasets/Sheet1 (S&P_Stock_Price)_Sheet1.xlsx")
+data_1
+```
+
+```{r}
+data_1$Date <- as.Date(data_1$Date)
+```
+
+```{r}
+data_1
+```
+
+
+```{r}
+```
+
+
+```{r}
+
+```
+
+```{r}
+col <- xts(x = data_1$High, order.by = data_1$Date)
+p <- dygraph(col,main = "S&P Stock Prices",ylab="Average High") %>%
+  dyOptions(labelsUTC = TRUE, fillGraph=TRUE, fillAlpha=0.1, drawGrid = FALSE, colors="#D8AE5A") %>%
+  dyRangeSelector() %>%
+  dyCrosshair(direction = "vertical") %>%
+  dyHighlight(highlightCircleSize = 5, highlightSeriesBackgroundAlpha = 0.2, hideOnMouseOut = FALSE)  %>%
+  dyRoller(rollPeriod = 1)
+p
+```
+
+
+```{r}
+data_2 <- read_excel("Dataviz assignment datasets/Sheet1 (LEHMAN_Stock_price)_Sheet1.xlsx")
+data_2$Date <- as.Date(data_2$Date)
+```
+
+```{r}
+library(tidyverse)
+library(hrbrthemes)
+library(ggplot2)
+
+
+  ggplot(data_2,aes(x=Date, y=High)) +
+    geom_bar(stat="identity") +
+    ggtitle("Lehman Brothers Stock Price") +
+  	theme_ipsum() +
+    xlab("Year")
+```
+
+```{r}
+
+```
+```{r}
+data_4 <- read_excel("Dataviz assignment datasets/FRED Graph (composite_home_price_index_case_shiller)_FRED Graph.xlsx")
+data_4$`Observation Date`=mdy(data_4$`Observation Date`)
+```
+
+```{r}
+
+ggp <- ggplot(data_4)  + 
+  geom_bar(aes(x=`Observation Date`, y=`Composite Home Price Index`),stat="identity", fill="cyan",colour="#006000")+
+  geom_line(aes(x=`Observation Date`, y=`Median Sale Price`),stat="identity",color="red",size=2)+
+  labs(title= "Composite Home Price Index and Average Sale Price",
+       x="Year",y="Number of Courses Sold")+
+  scale_y_continuous(sec.axis=sec_axis(~.))
+ggp
+```
+```{r}
+data_5<-read_excel("Dataviz assignment datasets/Banks_Stock.xlsx")
+data_5$Date<-mdy(data_5$Date)
+data_5 <- data_5 %>% 
+ filter(BankNames %in% c("Bankof America","JP Morgan","Morgan Stanley","Wells Fargo"))
+```
+
+```{r}
+library(ggplot2)
+library(gganimate)
+library(gifski)
+library(png)
+library(transformr)
+ 
+myAnimation<-
+ggplot(data_5, aes(Date, Values, size = Values, colour = BankNames)) +
+  geom_point(alpha = 0.7, show.legend = FALSE) +
+  #scale_colour_manual(values = country_colors) +
+  scale_size(range = c(2, 12)) +
+  facet_wrap(~BankNames) +
+
+  labs(title = 'Year: {frame_time}', x = 'Date', y = 'Values') +
+	shadow_mark(alpha=1,size=0.5)+
+  transition_time(Date) +
+  ease_aes('linear')
+
+
+animate(myAnimation, duration = 5, fps = 20, width = 800, height = 800, renderer = gifski_renderer())
+anim_save("Banking.gif")
+
+```
+
+```{r}
+data_6<-read_excel("Dataviz assignment datasets/Homeownership_Rate_by_State_Percent.xlsx")
+data_6$Year<-as.Date(data_6$Year)
+
+
+```
+```{r}
+library(gcookbook)
+#data_5 <- data_5 %>% 
+#  filter(BankNames %in% c("Bankof America","JP Morgan","Morgan Stanley","Wells Fargo"))
+ggplot(data_6, aes(x = Year, y = `Home ownsership Percentage`, colour = `Region Name`)) +
+  geom_line()+
+	ggtitle("Home ownership rate across 5 states")
+	#facet_wrap(~BankNames)
+
+```
+
+```{r}
+data_7<-read_excel("Dataviz assignment datasets/Zillow_Home_value_Index_Zillow_Home_value_Index.xlsx")
+data_7$Year<-mdy(data_7$Year)
+data_7=data_7[!(is.na(data_7$value) | data_7$value==""), ]
+data_7
+```
+
+
+```{r}
+library(plotly)
+library(dplyr)
+library(readr)
+
+map_data = data_7
+
+map_data_graph <- plot_geo(map_data,
+						  locationmode = 'USA-states',
+						  frame = ~year(Year)) %>%
+	add_trace(locations = ~State,
+			  z = ~value,
+			  zmin = 0,
+			  zmax = 600000,
+			  color = ~value,
+			  colorscale = 'Electric') %>%
+	layout(geo = list(scope = 'usa'),
+		   title = "Home value Index through the years 2005-2014")
+
+#export as html file
+htmlwidgets::saveWidget(map_data_graph, file = "home_value_map.html")
+
+
+```
+
+```{r}
+data_8<-read_excel("Dataviz assignment datasets/FEDFUNDS.xlsx")
+data_8$Date<-mdy(data_8$Date)
+```
+
+```{r}
+data <- data_8
+barplot(main="Federal funds", height=data$Fedfunds, names=data$Date , density=c(5,10,20,30,7) , angle=c(0,45,90,11,36) , col="black"   )
+```
+```{r}
+data_9<-read_excel("Dataviz assignment datasets/Net_Losses_Overall.xlsx")
+data_9$Date<-mdy(data_9$Date)
+data_9
+```
+
+
+```{r}
+library(viridis)
+data_9 %>%
+  ggplot( aes(x=Date, y=NetLoss, group=State, fill=State)) +
+    geom_area() +
+    scale_fill_viridis(discrete = TRUE) +
+    theme(legend.position="none") +
+    ggtitle("Net Loan Losses") +
+    theme_ipsum() +
+    theme(
+      legend.position="none",
+      panel.spacing = unit(0.1, "lines"),
+      strip.text.x = element_text(size = 8)
+    ) +
+    facet_wrap(~State, scale="free_y")
+```
+```{r}
+data_10<-read_excel("Dataviz assignment datasets/Currency in circulation.xlsx")
+data_10$Date<-mdy(data_10$Date)
+col_1<- xts(x = data_10$Currency, order.by = data_10$Date)
+p <- dygraph(col,main = "Currency Circulation in dollars",ylab="USD") %>%
+  dyOptions(labelsUTC = TRUE, fillGraph=TRUE, fillAlpha=0.1, drawGrid = FALSE, colors="#000000") %>%
+  dyRangeSelector() %>%
+  dyCrosshair(direction = "vertical") %>%
+  dyHighlight(highlightCircleSize = 5, highlightSeriesBackgroundAlpha = 1, hideOnMouseOut = FALSE)  %>%
+  dyRoller(rollPeriod = 1)
+p
+```
+
+```{r}
+data_11<-read_excel("Dataviz assignment datasets/unemp1.xlsx")
+data_11$Year<-dmy(data_11$Year)
+data_11
+```
+```{r}
+library(viridis)
+data_11 %>%
+	  ggplot( aes(x=Year, y=`Observation Value`)) +
+    geom_area() +
+    scale_fill_viridis(discrete = FALSE) +
+    theme(legend.position="none") +
+    ggtitle("Total Unemployment rate of labour") +
+    theme_ipsum() +
+    theme(
+      legend.position="none",
+      panel.spacing = unit(0.1, "lines"),
+      strip.text.x = element_text(size = 8)
+    ) 
+    #facet_wrap(~State, scale="free_y")
+```
+```{r}
+data_12<-read_excel("Dataviz assignment datasets/median_household_income.xlsx")
+data_12$Date<-dmy(data_12$Date)
+data_12
+```
+
+
+```{r}
+library(plotly)
+library(dplyr)
+library(readr)
+
+map_data = data_12
+
+map_data_graph <- plot_geo(map_data,
+						  locationmode = 'USA-states',
+						  frame = ~year(Date)) %>%
+	add_trace(locations = ~State,
+			  z = ~Income,
+			  zmin = 0,
+			  zmax = 100000,
+			  color = ~Income,
+			  colorscale = 'Electric') %>%
+	layout(geo = list(scope = 'usa'),
+		   title = "Median Household Income over the years")
+
+#export as html file
+htmlwidgets::saveWidget(map_data_graph, file = "household_income_map.html")
+```
+
+
+```{r}
+data_13<-read_excel("Dataviz assignment datasets/Total_Job_Openings.xlsx")
+data_13$Year<-dmy(data_13$Year)
+data_13
+```
+```{r}
+	col_2 <- xts(y = data_13$`Job Openings`, order.by = data_13$Year)
+p <- dygraph(col,main = "Total Job Openings across US - normalized",ylab="Job Openings") %>%
+  dyOptions(labelsUTC = TRUE, fillGraph=TRUE, fillAlpha=0.1, drawGrid = FALSE, colors="#4C43A1") %>%
+  dyRangeSelector() %>%
+  dyCrosshair(direction = "vertical") %>%
+  dyHighlight(highlightCircleSize = 5, highlightSeriesBackgroundAlpha = 0.8, hideOnMouseOut = FALSE)  %>%
+  dyRoller(rollPeriod = 1)
+p
+```
+
+```{r}
+
+```
+

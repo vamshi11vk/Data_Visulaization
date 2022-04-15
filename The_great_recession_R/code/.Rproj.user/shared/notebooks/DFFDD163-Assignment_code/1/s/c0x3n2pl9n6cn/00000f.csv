@@ -1,0 +1,4 @@
+"0","data_7<-read_excel(""Dataviz assignment datasets/Zillow_Home_value_Index_Zillow_Home_value_Index.xlsx"")"
+"0","data_7$Year<-mdy(data_7$Year)"
+"0","data_7=data_7[!(is.na(data_7$value) | data_7$value==""""), ]"
+"0","data_7"

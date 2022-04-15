@@ -1,0 +1,15 @@
+"0","library(gcookbook)"
+"2","
+Attaching package: ‘gcookbook’
+
+"
+"2","The following object is masked from ‘package:plotly’:
+
+    wind
+
+"
+"0","#data_5 <- data_5 %>% "
+"0","#  filter(BankNames %in% c(""Bankof America"",""JP Morgan"",""Morgan Stanley"",""Wells Fargo""))"
+"0","ggplot(data_6, aes(x = Year, y = `Home ownsership Percentage`, colour = `Region Name`)) +"
+"0","  geom_line()+"
+"0","	ggtitle(""Home ownership rate across 5 states"")"

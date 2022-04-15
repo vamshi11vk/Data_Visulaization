@@ -1,0 +1,1 @@
+"0","col <- xts(x = data_1$High, order.by = data_1$Date)"

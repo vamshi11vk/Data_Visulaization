@@ -1,0 +1,26 @@
+{
+    "id": "A4EDFA4B",
+    "path": "~/R Assignment/Dashboard3/app.R",
+    "project_path": "Dashboard3/app.R",
+    "type": "r_source",
+    "hash": "2685926367",
+    "contents": "",
+    "dirty": false,
+    "created": 1649817255702.0,
+    "source_on_save": false,
+    "relative_order": 4,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "36,1",
+        "scrollLine": "15"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1649889008,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1649889008921,
+    "read_only": false,
+    "read_only_alternatives": []
+}

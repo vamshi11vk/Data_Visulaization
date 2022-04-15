@@ -1,0 +1,8 @@
+"0","col <- xts(x = data_1$High, order.by = data_1$Date)"
+"0","p <- dygraph(col,main = ""S&P Stock Prices"",ylab=""Average High"") %>%"
+"0","  dyOptions(labelsUTC = TRUE, fillGraph=TRUE, fillAlpha=0.1, drawGrid = FALSE, colors=""#D8AE5A"") %>%"
+"0","  dyRangeSelector() %>%"
+"0","  dyCrosshair(direction = ""vertical"") %>%"
+"0","  dyHighlight(highlightCircleSize = 5, highlightSeriesBackgroundAlpha = 0.2, hideOnMouseOut = FALSE)  %>%"
+"0","  dyRoller(rollPeriod = 1)"
+"0","p"

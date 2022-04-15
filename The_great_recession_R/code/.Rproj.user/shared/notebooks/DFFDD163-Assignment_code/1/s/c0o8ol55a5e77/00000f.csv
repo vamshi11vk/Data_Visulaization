@@ -1,0 +1,4 @@
+"0","data_5<-read_excel(""Dataviz assignment datasets/Banks_Stock.xlsx"")"
+"0","data_5$Date<-mdy(data_5$Date)"
+"0","data_5 <- data_5 %>% "
+"0"," filter(BankNames %in% c(""Bankof America"",""JP Morgan"",""Morgan Stanley"",""Wells Fargo""))"

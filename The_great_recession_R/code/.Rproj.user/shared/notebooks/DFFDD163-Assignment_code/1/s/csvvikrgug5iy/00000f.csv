@@ -1,0 +1,2 @@
+"0","data_2 <- read_excel(""Dataviz assignment datasets/Sheet1 (LEHMAN_Stock_price)_Sheet1.xlsx"")"
+"0","data_2$Date <- as.Date(data_2$Date)"

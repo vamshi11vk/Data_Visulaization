@@ -1,0 +1,8 @@
+"0","	col_2 <- xts(y = data_13$`Job Openings`, order.by = data_13$Year)"
+"0","p <- dygraph(col,main = ""Total Job Openings across US - normalized"",ylab=""Job Openings"") %>%"
+"0","  dyOptions(labelsUTC = TRUE, fillGraph=TRUE, fillAlpha=0.1, drawGrid = FALSE, colors=""#4C43A1"") %>%"
+"0","  dyRangeSelector() %>%"
+"0","  dyCrosshair(direction = ""vertical"") %>%"
+"0","  dyHighlight(highlightCircleSize = 5, highlightSeriesBackgroundAlpha = 0.8, hideOnMouseOut = FALSE)  %>%"
+"0","  dyRoller(rollPeriod = 1)"
+"0","p"

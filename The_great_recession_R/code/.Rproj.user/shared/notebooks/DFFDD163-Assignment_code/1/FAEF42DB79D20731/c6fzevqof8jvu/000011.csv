@@ -1,0 +1,3 @@
+"0","data_10<-read_excel(""Dataviz assignment datasets/Currency in circulation.xlsx"")"
+"0","data_10$Date<-mdy(data_10$Date)"
+"0","barplot(main=""Circulation in dollars"", height=data_10$Currency, names=data_10$Date , density=c(5,10,20,30,7) , angle=c(0,45,90,11,36) , col=""black""   )"

@@ -1,0 +1,2 @@
+"0","data <- data_8"
+"0","barplot(main=""Federal funds"", height=data$Fedfunds, names=data$Date , density=c(5,10,20,30,7) , angle=c(0,45,90,11,36) , col=""black""   )"

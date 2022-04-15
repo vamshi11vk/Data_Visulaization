@@ -1,0 +1,4 @@
+"0","data_6<-read_excel(""Dataviz assignment datasets/Homeownership_Rate_by_State_Percent.xlsx"")"
+"0","data_6$Year<-as.Date(data_6$Year)"
+"0",""
+"0",""

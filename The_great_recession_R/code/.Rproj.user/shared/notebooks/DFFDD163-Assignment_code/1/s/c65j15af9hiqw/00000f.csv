@@ -1,0 +1,2 @@
+"0","data_4 <- read_excel(""Dataviz assignment datasets/FRED Graph (composite_home_price_index_case_shiller)_FRED Graph.xlsx"")"
+"0","data_4$`Observation Date`=mdy(data_4$`Observation Date`)"
